@@ -1,0 +1,16 @@
+{
+  "id": "3567462",
+  "name": "web平台",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1118",
+      "name": "文件",
+      "font_class": "wenjian",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

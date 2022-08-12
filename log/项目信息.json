@@ -1,0 +1,15 @@
+{"file3":
+  {
+    "projectName":"file3",
+    "projectPath":"C:\\Users\\yezouhua\\Desktop\\master\\胶体\\p3\\revised\\file3",
+    "lastSaved":"2022-08-08 09:52:22",
+    "lastSavedDate":1659923542885,
+    "area":"0.00 ha",
+    "periods":"",
+    "softWare":"zkh-model v1.0",
+    "rainfall":{"state":false,"startDate":"","endDate":""},
+    "landUse":{"state":false,"grids":0},
+    "soilType":{"state":false,"grids":0},
+    "DEM":{"state":false,"grids":0}
+  }
+}
