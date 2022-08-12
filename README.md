@@ -1,7 +1,7 @@
 ## 分布式流域模型桌面平台
 
 针对现有半分布式模型的局限性，本项目构建了耦合田块尺度富集/流失、流域尺度传输及河道迁移过程的分布式水土流失型面源污染模型，开发了高效栅格汇流算法，破解了丘陵山区水土流失面源污染精准评估和防控的技术瓶颈问题。项目基于Vue3+Electron开发应用界面，基于Python开发模型运算核心模块（地理信息数据处理、NSGA-III智能率定）。
-![image]([preview/flowcharts.jpg](https://github.com/OstrichZkh/nps_model/blob/main/preview/DEM.jpg?raw=true))
+![image](https://github.com/OstrichZkh/nps_model/blob/main/preview/DEM.jpg)
 
 ### 技术栈
 
