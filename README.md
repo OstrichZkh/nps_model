@@ -1,7 +1,7 @@
 ## 分布式流域模型桌面平台
 
 针对现有半分布式模型的局限性，本项目构建了耦合田块尺度富集/流失、流域尺度传输及河道迁移过程的分布式水土流失型面源污染模型，开发了高效栅格汇流算法，破解了丘陵山区水土流失面源污染精准评估和防控的技术瓶颈问题。项目基于Vue3+Electron开发应用界面，基于Python开发模型运算核心模块（地理信息数据处理、NSGA-III智能率定）。
-![image](https://github.com/OstrichZkh/nps_model/blob/main/preview/DEM.jpg)
+![image](https://github.com/OstrichZkh/nps_model/blob/main/preview/flowcharts.jpg)
 
 ### 技术栈
 
@@ -12,6 +12,7 @@ Vue3 + Electron + ElementPlus + echarts + Python + 机器学习
 · 点击新建项目，选择一个空文件夹作为项目文件夹。
 
 · 屏幕右侧显示项目的基本信息及数据导入情况。
+![image](https://github.com/OstrichZkh/nps_model/blob/main/preview/homepage.jpg)
 
 ##### 选择模型模拟期
 
@@ -26,6 +27,7 @@ Vue3 + Electron + ElementPlus + echarts + Python + 机器学习
 · 随后electron主进程通过child_process模块运行python文件，计算月降雨量，将数据返回给渲染进程，通过echarts进行绘制月降雨量的分布折线图。
 
 此处插图
+![image](https://github.com/OstrichZkh/nps_model/blob/main/preview/rainfall.jpg)
 
 ##### 土地利用/土壤类型/DEM数据导入
 
@@ -37,6 +39,9 @@ Vue3 + Electron + ElementPlus + echarts + Python + 机器学习
 
 *吴昌广,曾毅,周志翔,王鹏程,肖文发,罗翀.三峡库区土壤可蚀性K值研究[J].中国水土保持科学,2010,8(03):8-12.DOI:10.16843/j.sswc.2010.03.002.*
 
+![image](https://github.com/OstrichZkh/nps_model/blob/main/preview/landuse.jpg)
+![image](https://github.com/OstrichZkh/nps_model/blob/main/preview/soiltype.jpg)
+![image](https://github.com/OstrichZkh/nps_model/blob/main/preview/DEM.jpg)
 ##### 水土流失量运算模块
 
 水土流失量运算使用RUSLE方程。 -> 页面开发中
@@ -45,8 +50,7 @@ Vue3 + Electron + ElementPlus + echarts + Python + 机器学习
 
 · 产汇流模块：
 
-
-传统的栅格汇流算法是基于源头到出口的正向思路实现的[19]，但是正向计算的思路存在计算效率低下的问题，因此本研究提出了结合反向递归及哈希表的优化算法。具体步骤如下：
+传统的栅格汇流算法是基于源头到出口的正向思路实现的，但是正向计算的思路存在计算效率低下的问题，因此本研究提出了结合反向递归及哈希表的优化算法。具体步骤如下：
 
 （1）基于D8算法获得栅格之间的上下游关系，构建一个字典保存栅格之间的上下游关系，字典的值保存了某一栅格所有上游栅格的集合，键则为下游栅格（图3b）。字典基于哈希算法实现，键名是唯一、不能重复的，因此只需要以接近常量的时间便可以查询某一栅格的所有上游栅格，无需遍历字典中的所有元素。因此在查询某一栅格的上游栅格时，查询时间并不会随着流域面积（字典长度）的增大而增大；
 
@@ -61,5 +65,7 @@ Vue3 + Electron + ElementPlus + echarts + Python + 机器学习
 （4） 对5号栅格和6号栅格进行索引，发现二者无上游栅格，则直接进行模拟，并将模拟结果返回给3号栅格。
 
 假设某流域一共有n个栅格，从流域出口反向递归索引保证一次模拟只需要进行n次计算，而正向计算需要不断地判断上下游关系，计算次数可能会达到n2次甚至n3次。经过递归算法和哈希表的优化，所构建分布式模型的运行时间只会随流域面积的增大及内部方程的增多线性增长而不是指数增长，为后续的高效计算和率定奠定了基础。
+![image](https://github.com/OstrichZkh/nps_model/blob/main/preview/D8.jpg)
 
-· 率定模块：
+· 率定模块
+由于涉及35个待率定参数，以及三个率定指标，模型率定属于典型NP-HARD问题，以带有精英保留策略的NSGA-II算法运用最为广泛。但在实际应用中NSGA-II算法的性能会随着优化目标的扩展和优化问题的复杂化而受显著影响。因此本研究使用2014年DEBK提出的NSGA-III算法对模型的参数进行率定。通过引入广泛分布参考点以维持种群多样性并对拥挤排序进行改编，NSGA-III算法具有良好的在搜索高维空间中解的能力，在参数率定中得到了广泛的应用。算法参数（种群数量、迭代次数、交叉概率、变异概率）为用户自己设置。
